@@ -6,7 +6,7 @@
   <img src="http://hits.dwyl.io/HalasProject/StudentPLUS.svg"/> •
 </p>
 
-<div style="padding-left:20%x">
+
 # StudentA+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
@@ -15,4 +15,3 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-</div>
