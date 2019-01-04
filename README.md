@@ -1,5 +1,5 @@
 
-![WithLove](https://raw.githubusercontent.com/HalasProject/StudentPLUS/master/src/assets/Home2.png)
+![WithLove](https://raw.githubusercontent.com/HalasProject/StudentPLUS/master/src/assets/HOME2.png)
 
 <p align="center">
  • <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square"></a>
