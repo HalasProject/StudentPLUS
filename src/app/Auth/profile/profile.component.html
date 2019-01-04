@@ -1,0 +1,67 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/images/tchico.jpg" class="rounded-circle shadow-mb" id="icon" id="icon" alt="User Icon" />
+
+    </div>
+
+
+    {{"Email Verification : "+ user.emailVerified}}
+    <!-- Login Form -->
+    <form [formGroup]="FormulaireProfile" (ngSubmit)="onSubmit()">
+
+
+      <input formControlName="NomEtPrenom" type="email" id="NomEtPrenom" class="fadeIn second" name="NomEtPrenom"
+        placeholder="example@email.com">
+      <div *ngIf="(NomEtPrenom.touched && NomEtPrenom.dirty) && NomEtPrenom.invalid">
+        <div *ngIf="!!NomEtPrenom.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire
+          !</div>
+        <div *ngIf="!!NomEtPrenom.errors.maxlength" class="alert alert-danger ml-5" style="width:350px;">
+          The Maximum length is 30</div>
+        <div *ngIf="!!NomEtPrenom.errors.pattern" class="alert alert-danger ml-5" style="width:350px;">
+          Nom Invalide !</div>
+      </div>
+
+
+
+
+
+      <input formControlName="mail" type="email" id="login" class="fadeIn second" name="mail" placeholder="example@email.com">
+      <div *ngIf="(mail.touched && mail.dirty) && mail.invalid">
+        <div *ngIf="!!mail.errors.email" class="alert alert-danger ml-5" style="width:350px;">Not valid email!</div>
+        <div *ngIf="!!mail.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire !</div>
+
+      </div>
+
+      <input autocomplete="off" formControlName="password" type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+      <div *ngIf="(password.touched && password.dirty) && password.invalid">
+        <div *ngIf="!!password.errors.minlength" class="alert alert-danger ml-5" style="width:350px;">
+          The Minimum length is 6</div>
+        <div *ngIf="!!password.errors.required" class="alert alert-danger ml-5" style="width:350px;">
+          Password Required !</div>
+
+      </div>
+
+
+      <input [disabled]="!FormulaireProfile.valid" type="submit" class="fadeIn fourth" value="EDIT PROFILE">
+
+  <!-- Modal -->
+
+
+    
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Vous n'avez pas encore de compte ? <a class="underlineHover">Créez-en un !</a>
+    </div>
+  </form>
+  </div>
+
+
+</div>
+
+
+

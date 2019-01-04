@@ -41,3 +41,14 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+src/app/Auth/connexion/connexion.component.spec.ts
+src/app/Auth/inscription/inscription.component.spec.ts
+src/app/Auth/my-doc/my-doc.component.spec.ts
+src/app/Auth/profile/profile.component.spec.ts
+src/app/Documents/add/add.component.spec.ts
+src/app/Documents/all/all.component.spec.ts
+src/app/Documents/edit/edit.component.spec.ts
+src/app/footer/footer.component.spec.ts
+src/app/home/home.component.spec.ts
+src/app/app.component.ts
+src/app/app.component.ts

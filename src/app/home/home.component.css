@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box;
+}
+
+.lol{
+    position:relative;
+    
+    
+}
+
+.blockimage{
+     
+    cursor: pointer;
+}
+
+.blockimage:hover{
+    opacity: 0.8;
+   
+
+}
+
+
+.Halaso{
+    text-align: center;
+    position:absolute;
+    bottom:150px;
+    right:20%;
+}
+
+
+/* Landscape phones and portrait tablets */
+@media (max-width: 767px) {
+
+    .bgimg {
+  visibility: hidden;
+    }
+
+  .resizeMe{
+      width:90%;
+      height: 90%;
+      text-align: center;
+
+  }
+}
+
+/* Portrait phones and smaller */
+@media (max-width: 480px) {
+
+    .bgimg {
+        visibility: hidden;
+}
+
+.resizeMe{
+    width:90%;
+    height: 90%;
+    text-align: center;
+
+}
+}

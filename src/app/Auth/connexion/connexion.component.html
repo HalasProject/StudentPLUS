@@ -1,0 +1,49 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/images/HalasProject.png" id="icon" alt="User Icon" />
+
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="Formulaire" (ngSubmit)="onSubmit()">
+      <input formControlName="mail" type="email" id="login" class="fadeIn second" name="mail" placeholder="example@email.com">
+      <div *ngIf="(mail.touched && mail.dirty) && mail.invalid">
+        <div *ngIf="!!mail.errors.email" class="alert alert-danger ml-5" style="width:350px;">Not valid email!</div>
+        <div *ngIf="!!mail.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire !</div>
+       
+      </div>
+
+      <input autocomplete="off" formControlName="password" type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+      <div *ngIf="(password.touched && password.dirty) && password.invalid">
+        <div *ngIf="!!password.errors.minlength" class="alert alert-danger ml-5" style="width:350px;">
+          The Minimum length is 6</div>
+        <div *ngIf="!!password.errors.required" class="alert alert-danger ml-5" style="width:350px;">
+          Password Required !</div>
+
+      </div>
+
+
+      <input [disabled]="!Formulaire.valid" type="submit" class="fadeIn fourth" value="Connexion">
+      
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Vous n'avez pas encore de compte ? <a class="underlineHover" routerLink="/Inscription">Créez-en un !</a>
+    </div>
+
+  </div>
+
+  
+</div>
+
+<div *ngIf="InformationText" class="alert alert-warning alert-dismissible fade show ml-4" style="width:400px" role="alert">
+    <strong>FireBase!</strong> {{InformationText}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>

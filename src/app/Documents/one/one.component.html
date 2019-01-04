@@ -1,0 +1,80 @@
+<div class="container animated fadeInUp">
+  <div *ngIf="CurrentDoc" class="jumbotron ">
+    <div class="row">
+
+      <div class="col col-lg-8">
+        <div class="ml-4 media">
+          <div class="media-body">
+            <h5 class="display-4 mt-0">{{CurrentDoc?.Titre}}</h5>   <span Class="badge mr-2 badge-success"><strong>Auteur:  </strong>  {{CurrentDoc?.CreatorName}}</span>  <span Class="badge badge-pill mr-2 badge-primary">{{CurrentDoc?.Type}}</span>
+
+           <div class="mt-4 alert alert-warning">
+              <strong>Remarque: </strong>{{CurrentDoc?.Remarque}}
+           </div>
+          
+         
+
+          </div>
+        </div>
+
+      </div>
+      <div class="col col-lg-4">
+
+
+        <div class="card" style="width: 18rem;">
+         
+          <div class="card-header form-inline">
+            
+            <b>INFORMATION</b>
+           <div *ngIf="CurrentDoc.UserID === UserID" class="ml-3 dropdown">
+              <a  class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                ADMIN
+              </a>
+            
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Modifié</a>
+                <a class="dropdown-item btn" data-toggle="modal" data-target="#DeleteMe">Supprimer</a>
+              </div>
+            </div>
+            
+          </div>
+          
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><b>Date :</b> {{CurrentDoc?.Date.seconds * 1000 | date:'MM/dd/yyyy - HH:mm ' }}</li>
+            <li class="list-group-item"><b>Year :</b> {{CurrentDoc?.Year}} | <b>Semestre :</b>{{CurrentDoc.Semestre}}</li>
+            <li class="list-group-item"><b>Section :</b> {{CurrentDoc?.Section}}</li>
+            <li class="list-group-item"><b>Groupe :</b> {{CurrentDoc?.Groupe}}</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    
+  
+    <img id="myimg" (click)="openImage()" src="/assets/images/load.gif" class="mt-5 DimImage rounded mx-auto d-block">
+  
+  </div>
+
+
+  <hr>
+
+</div>
+
+<div class="modal fade" id="DeleteMe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Supression d'Affichage</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Are you sure to delete ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"  (click)="onDelete(idDoc)" data-dismiss="modal" >Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

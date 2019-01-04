@@ -1,0 +1,186 @@
+<div class="container animated bounceInRight slower ">
+  <div class="jumbotron  DesignedJumbo shadow-lg">
+    <div class="row">
+
+      <div class="col col-lg-12">
+
+        <div class="donner">
+          <form *ngIf="!TimeToUpload" [formGroup]="FormulaireAdd" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="Titre">Titre:</label>
+                <input formControlName="Titre" type="text" class="form-control" name="Titre" id="Titre" placeholder="">
+                <div class="bounceIn" *ngIf="(Titre.touched && Titre.dirty) && Titre.errors">
+                  <div *ngIf="!!Titre?.errors.required" class="alert alert-danger">
+                    Champ Vide !
+                  </div>
+                  <div *ngIf="!!Titre?.errors.maxlength" class="alert alert-danger">
+                    Maximum length is 10 !
+                  </div>
+                </div>
+
+
+              </div>
+
+            </div>
+
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="Year">Year:</label>
+                <select name="Year" formControlName="Year" id="Year" class="form-control">
+                  <option>Licence 1</option>
+                  <option>Licence 2</option>
+                  <option>Licence 3</option>
+                  <option>Master 1</option>
+                  <option>Master 2</option>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="Semestre">Semestre:</label>
+                <select name="Semestre" formControlName="Semestre" id="Semestre" class="form-control">
+                  <option>S1</option>
+                  <option>S2</option>
+
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="Module">Module:</label>
+                <select name="Module" formControlName="Module" id="Module" class="form-control">
+                  <option *ngFor="let Module of ModuleCalculator()">{{Module}}</option>
+
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="Section">Section:</label>
+                <input name="Section" formControlName="Section" type="number" class="form-control" id="Section"
+                  placeholder="Section Number">
+                <div class="bounceIn" *ngIf="(Section.touched && Section.dirty) && Section.errors">
+                  <div *ngIf="!!Section?.errors.required" class="alert alert-danger">
+                    Champ Vide !
+                  </div>
+                  <div *ngIf="!!Section?.errors.max" class="alert alert-danger">
+                    Maximum number 10 !
+                  </div>
+                  <div *ngIf="!!Section?.errors.min" class="alert alert-danger">
+                    Minimum number 1 !
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="Groupe">Groupe:</label>
+                <input formControlName="Groupe" name="Groupe" type="number" class="form-control" id="Groupe"
+                  placeholder="Groupe Number">
+                <div class="bounceIn" *ngIf="(Groupe.touched && Groupe.dirty) && Groupe.errors">
+                  <div *ngIf="!!Groupe?.errors.required" class="alert alert-danger">
+                    Champ Vide !
+                  </div>
+                  <div *ngIf="!!Groupe?.errors.max" class="alert alert-danger">
+                    Maximum number 10 !
+                  </div>
+                  <div *ngIf="!!Groupe?.errors.min" class="alert alert-danger">
+                    Minimum number 1 !
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-group col-md-4">
+                <label for="Type">Type:</label>
+                <select name="Type" formControlName="Type" id="Type" class="form-control">
+                  <option>Test</option>
+                  <option>Examin</option>
+                  <option>TPs/TDs</option>
+                  <option>Project</option>
+                  <option>Moyennes</option>
+                </select>
+                <div class="bounceIn" *ngIf="(Type.touched && Type.dirty) && Type.errors">
+                  <div *ngIf="!!Type.errors?.required" class="alert alert-danger">
+                    Champ Obligatoire !
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="Remarque">Remarque:</label>
+              <textarea name="Remarque" formControlName="Remarque" class="form-control" id="Remarque" rows="3"></textarea>
+              <div class="bounceIn" *ngIf="(Remarque.touched && Remarque.dirty) && Remarque.errors">
+                <div *ngIf="!!Remarque?.errors.maxlength" class="alert alert-danger">
+                  Maximum length is 150 !
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button [disabled]="!FormulaireAdd.valid" type="submit" class="btn btn-primary btn-lg">Next</button>
+
+
+            </div>
+
+          </form>
+        </div>
+
+        <div *ngIf="TimeToUpload" class="bounceIn animated ">
+          <div class="text-center">
+              
+            <input #imageKH (change)="onChange($event)" type="file" accept="image/*" class="shadow-sm border border-primary px-3 pt-2 pb-2 alert alert-primary  font-weight-bold rounded-pill"><br><br>
+              
+            <button id="btnPublier" (click)="onSubmitGloabal()" [disabled]="disableButton" class="btn btn-primary btn-lg" style="display:none;">
+                Publier
+                <div  *ngIf="disableButton" class="LoadING" >
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </button>
+
+              <br><br>
+              <div *ngIf="disableButton" class="progress">
+                <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': Uploader?.progress + '%' }"></div>
+              </div>
+              <br>
+          </div>
+         
+          <div *ngIf="disableButton" class ="pulse animated infinite slow col-sm-12" style="">
+            <ul class="list-group shadow-sm">
+          <li *ngIf="Uploader.progress"  class="list-group-item active"><b>{{Uploader?.progress | number:'1.0-0'}} %</b> </li>
+              <li class="list-group-item"><b>Titre </b>{{Titre.value}} </li>
+              <li class="list-group-item"><b>Module </b>{{Module.value}}</li>
+              <li class="list-group-item"><b>Year </b>{{Year.value}} </li>
+              <li class="list-group-item"><b>Section </b>{{Section.value}}</li>
+              <li class="list-group-item"><b>Groupe </b>{{Groupe.value}}</li>
+
+            </ul>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>
+<div class="d-flex justify-content-center">
+  
+  
+  <div *ngIf="InformationText" class="alert alert-success alert-dismissible fade show ml-4 mr-4" style="width:400px"
+    role="alert">
+    <strong>FireBase!</strong> {{InformationText}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+
+</div>

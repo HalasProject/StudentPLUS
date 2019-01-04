@@ -1,0 +1,73 @@
+<div class="container">
+
+
+  <div *ngIf="GetLength()" id="errornothing">
+      <img   class="mx-auto d-block animated delay-2s jackInTheBox col-sm-8 col-md-12 " src="/assets/images/nothing.png"  alt="">
+    </div>
+
+
+    <div class="row">
+      <!-- Tant Que ya une personne generé col-sm6-->
+        <div *ngFor="let Doc of Documents" class="jackInTheBox animated  slow col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="alert card shadow  alert-dismissible fade show px-0 pb-0" role="alert">
+            
+           
+            <div class="card-body Urop">
+              
+                <h5 class="card-title ">{{Doc?.Titre}}</h5>
+              <p class="card-text ">
+        
+               <b>Year: </b>{{Doc?.Year}} <br>
+               <b>Groupe: </b>{{Doc?.Groupe}} <br>
+               <b>Section: </b>{{Doc?.Section}} <br>
+               <b>Auteur: </b>{{Doc?.CreatorName}} <br>
+
+              </p>
+              <a [routerLink]="[ '/Affichage', Doc.id ]" class="btn btn-primary mr-2 float-right">Visualiser</a>
+              
+              <a *ngIf="Doc?.UserID == UserID" (click)="DocumentID = Doc.id" class="btn btn-danger text-white"  data-toggle="modal" data-target="#DeleteNow">Delete</a>
+            </div>
+              
+              <!-- Modal -->
+              
+
+
+
+
+
+            <div class="card-footer text-muted d-flex">
+                <span class="badge badge-success ">{{Doc?.Type}}</span>
+                <span class="badge badge-danger ml-auto">{{ Doc?.Date.seconds *1000 | date:'MM-dd-yyyy / HH:mm ' }}</span>
+            </div>
+            
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          
+        </div>
+        
+      </div>
+
+</div>
+
+
+<div class="modal fade" id="DeleteNow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Supression d'Affichage</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            Are you sure to delete ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary"  (click)="onDelete(DocumentID)" data-dismiss="modal" >Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>

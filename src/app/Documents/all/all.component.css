@@ -1,0 +1,11 @@
+.Urop{
+    background-image: url('/assets/images/fond.png');
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.alert{
+    padding:0rem 1.25rem
+}

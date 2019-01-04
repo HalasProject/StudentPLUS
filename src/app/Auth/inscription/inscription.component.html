@@ -1,0 +1,66 @@
+<div class="wrapper fadeInDown" style="position:relative;z-index:98">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="/assets/images/HalasProject.png" id="icon" alt="User Icon" />
+
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="FormulaireInscription" (ngSubmit)="onSubmit()">
+
+      <input formControlName="nom" type="text" id="nom" class="fadeIn second" name="nom" placeholder="Nom de famille">
+      <div *ngIf="nom.touched && nom.invalid">
+        <div *ngIf="!!nom.errors.pattern" class="alert alert-danger ml-5" style="width:350px;">Not valid Name!</div>
+        <div *ngIf="!!nom.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire !</div>
+        <div *ngIf="!!nom.errors.maxlength" class="alert alert-danger ml-5" style="width:350px;">The Maximum length is 15!</div>
+      </div>
+
+      <input formControlName="prenom" type="text" id="prenom" class="fadeIn second" name="prenom" placeholder="Prénom">
+      <div *ngIf="prenom.touched && prenom.invalid">
+        <div *ngIf="!!prenom.errors.pattern" class="alert alert-danger ml-5" style="width:350px;">Not valid Name!</div>
+        <div *ngIf="!!prenom.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire !</div>
+        <div *ngIf="!!prenom.errors.maxlength" class="alert alert-danger ml-5" style="width:350px;">The Maximum length is
+          15 !</div>
+      </div>
+
+
+      <input formControlName="mail" type="email" id="login" class="fadeIn second" name="mail" placeholder="example@email.com">
+      <div *ngIf="mail.touched && mail.invalid">
+        <div *ngIf="!!mail.errors.email" class="alert alert-danger ml-5" style="width:350px;">Not valid email!</div>
+        <div *ngIf="!!mail.errors.required" class="alert alert-danger ml-5" style="width:350px;">Champ Obligatoire !</div>
+      </div>
+
+      <input autocomplete="off" formControlName="password" type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+      <div *ngIf="password.touched && password.invalid">
+        <div *ngIf="!!password.errors.minlength" class="alert alert-danger ml-5" style="width:350px;">
+          The Minimum length is 6</div>
+        <div *ngIf="!!password.errors.required" class="alert alert-danger ml-5" style="width:350px;">
+          Password Required !</div>
+          <div *ngIf="!!password.errors.maxlength" class="alert alert-danger ml-5" style="width:350px;">
+              The Maximum length is 15</div>
+
+      </div>
+
+
+      <input [disabled]="!FormulaireInscription.valid" type="submit" class="fadeIn fourth" value="Connexion">
+    
+    </form>
+
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Vous avez un compte ? <a class="underlineHover" routerLink="/Connexion">Connectez vous !</a>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="InformationText" class="alert alert-warning alert-dismissible fade show ml-4" style="position:absolute;z-index:100;bottom:20px;width:400px;" role="alert">
+    <strong>FireBase!</strong> {{InformationText}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>

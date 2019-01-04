@@ -1,0 +1,15 @@
+.DimImage{
+
+max-width: 550px;
+max-height: 555px;
+cursor: pointer;
+}
+
+@media (max-width: 767px) {
+
+   .DimImage{
+    max-width: 250px;
+    max-height: 250px;
+   }
+  
+}
