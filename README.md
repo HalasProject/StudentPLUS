@@ -6,7 +6,7 @@
   <img src="http://hits.dwyl.io/HalasProject/StudentPLUS.svg"/> •
 </p>
 
-<div style="padding-left=20px">
+<div style="padding-left:20%x">
 # StudentA+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
