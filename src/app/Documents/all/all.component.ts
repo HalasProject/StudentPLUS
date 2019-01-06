@@ -14,82 +14,69 @@ import { Timestamp, Subscription } from 'rxjs';
   templateUrl: './all.component.html',
   styleUrls: ['./all.component.css']
 })
-export class AllComponent implements OnInit,OnDestroy {
+export class AllComponent implements OnInit, OnDestroy {
 
- 
+
   Documents: Documents[] = [];
-  UserID:string = "NULL";
-  DocumentID:string
-  StartNumber:number = 1;
-  RxJSDocument :Subscription;
+  Documents$: Subscription;
 
-  constructor(private DocumentService: DocumentsService,
-              private AuthService:AuthService) {
+  UserID: string = "NULL";
+  DocumentID: string;
+  
+  StartNumber: number = 1;
+  
 
-                this.DocumentService.GetDocumentsPaginator(8,this.StartNumber);
-               
-               
-               
-
+  constructor(private DocumentService: DocumentsService) {
+    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
   }
 
-  
-  ngOnInit() {
-  
 
-    this.RxJSDocument = this.DocumentService.AllDocumentObservable.subscribe(
-      (value)=> {
+  ngOnInit() {
+
+    this.Documents$ = this.DocumentService.AllDocuments$.subscribe(
+      (value) => {
         this.Documents = value;
-       
       }
     )
 
-    console.log(this.Documents.length)
-
+  $("cardeyes").mouseenter(
+    ()=>{ console.log("lol")}
+  )
     
 
-     
-     
-    
   }
 
-  onDelete(id:string){
-   
-    //JQ("#exampleModal").modal('hide')
+  onDelete(id: string) {
     this.DocumentService.onDeleteDocument(id);
-    this.ngOnInit();
-
   }
 
-  
-  onNext(){
-   //Manque le nombre maximum 
+
+  onNext() {
+    //Manque le nombre maximum 
     this.StartNumber += 4
-    this.DocumentService.GetDocumentsPaginator(8,this.StartNumber);
+    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
   }
 
-  onPrevious(){
+  onPrevious() {
     this.StartNumber -= 4
-    this.DocumentService.GetDocumentsPaginator(8,this.StartNumber);
+    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
 
   }
 
-  GetNumber():boolean{
+  GetNumber(): boolean {
     if (this.StartNumber <= 1)
-    return true;
+      return true;
   }
 
-  ngOnDestroy(){
-   
-    this.RxJSDocument.remove;
-    
-  }
-
-  GetLength():boolean{
+  GetLength(): boolean {
     if (this.Documents.length === 0)
-    return true;
+      return true;
     else
-    return false;
+      return false;
+  }
+
+  ngOnDestroy() {
+    this.Documents$.unsubscribe();
   }
 
 }

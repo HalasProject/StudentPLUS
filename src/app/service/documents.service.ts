@@ -4,6 +4,7 @@ import { Documents } from '../documents';
 import { Router } from '@angular/router';
 import { Upload } from '../upload';
 import { ReplaySubject } from 'rxjs';
+import { ConfigService } from './config.service';
 
 
 @Injectable({
@@ -12,31 +13,41 @@ import { ReplaySubject } from 'rxjs';
 
 export class DocumentsService {
 
-  firestore = firebase.firestore();
-  Doc: Documents[] = [];
-  OneDocuments: Documents = null;
-  basePath: string = "/images"
-  lastDoc: any;
 
-  //Observable
-  OneDocumentObservable = new ReplaySubject<Documents>();
-  AllDocumentObservable = new ReplaySubject<Documents[]>();
+  FireStore: firebase.firestore.Firestore;
+  storageRef = firebase.storage().ref();
 
+  COLLECTION_NAME: string;
+  ORDERED_NAME: string;
+  ORDERED_BY: firebase.firestore.OrderByDirection;
 
-  constructor(private Route: Router) {
-    this.firestore.settings({
-      timestampsInSnapshots: true
-    });
+  PATH_NAME: string;
 
+  
+  OneDocument: Documents = null;
+  OneDocument$ = new ReplaySubject<Documents>();
+
+  AllDocuments: Documents[] = [];
+  AllDocuments$ = new ReplaySubject<Documents[]>();
+
+  constructor(private Route: Router,
+    private Config: ConfigService) {
+
+    this.PATH_NAME = this.Config.PATH_NAME;
+    this.ORDERED_NAME = this.Config.ORDERED_NAME;
+    this.ORDERED_BY = this.Config.ORDERED_BY;
+    this.FireStore = this.Config.firestore
+    this.COLLECTION_NAME = this.Config.COLLECTION_NAME;
   }
 
 
-  GetDocumentOfOneUser(userID) {
-    this.Doc = []
-    this.firestore.collection('affichages')
-      .orderBy("Date", "desc")
+  GetDocumentOfOneUser(userID: string) {
+    this.AllDocuments = []
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
       .where("UserID", "==", userID)
-      .get().then(
+      .get()
+      .then(
         (value) => {
           value.forEach(
             (result) => {
@@ -44,7 +55,7 @@ export class DocumentsService {
               var Final = result.data() as Documents;
               Final.id = result.id;
 
-              this.Doc.push(Final)
+              this.AllDocuments.push(Final)
             }
           );
           this.emitAllDocument();
@@ -52,134 +63,140 @@ export class DocumentsService {
       );
 
   }
+
   GetDocuments(): Documents[] {
 
-    this.Doc = [];
-    this.firestore.collection('affichages').get().then(
-      (value) => {
-        value.forEach(
-          (result) => {
+    this.AllDocuments = [];
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .get()
+      .then(
+        (Documents) => {
+          Documents.forEach(
+            (Doc) => {
 
-            var Final = result.data() as Documents;
-            Final.id = result.id;
+              let OneDoc = Doc.data() as Documents;
+              OneDoc.id = Doc.id;
 
-            this.Doc.push(Final)
-          }
-        );
-      }
-    );
+              this.AllDocuments.push(OneDoc)
+            }
+          );
+        }
+      );
 
-    return this.Doc;
+    return this.AllDocuments;
 
-  }
-
-  GetDocumentNext() {
   }
 
   getDocumentById(DocID: string): Documents {
 
-    this.firestore.collection('affichages').doc(DocID).get().then(
-      (Doc) => {
-        if (Doc.exists) {
-          let Data = Doc.data() as Documents;
-          this.OneDocuments = Data;
-          this.emitDocumentID();
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .doc(DocID)
+      .get()
+      .then(
+        (Doc) => {
+          if (Doc.exists) {
+            let OneDoc = Doc.data() as Documents;
+            this.OneDocument = OneDoc;
+            this.emitDocumentID();
+          }
+          else {
+            console.log("Document N'existe pas !")
+            this.Route.navigate(['error'])
+          }
         }
-        else {
 
-          console.log("Documents N'existe pas !")
-          this.Route.navigate(['error'])
-        }
-      }
+      );
 
-    );
-
-    return this.OneDocuments;
+    return this.OneDocument;
   }
 
-  AddNewDocument(data) {
-    this.firestore.collection('affichages').doc().set(data).then(
-      () => { console.log("added !") }
-    )
+  AddNewDocument(DocumentInformation) {
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .doc()
+      .set(DocumentInformation)
+      .then(
+        () => { console.log("Document Added Succefuly !") }
+      )
       .catch(
-        () => { console.log("Erreur !") }
+        () => { console.log("Error To Add This New Document !") }
       )
   }
 
-  onDeleteDocument(id) {
+  onDeleteDocument(DocumentID: string) {
 
-    this.firestore.collection('affichages').doc(id).get().then(
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .doc(DocumentID)
+      .get()
+      .then(
+        (MyDoc) => {
 
-      (MyDoc) => {
-        let PathImage = MyDoc.data().Image
-        firebase.storage().ref().child(PathImage).delete();
-        MyDoc.ref.delete();
-        this.Doc.splice(this.Doc.findIndex(e => e.Image === PathImage),1);
-        this.emitAllDocument();
-      },
-      (error) => { console.log("Erreur !", error) });
+          let Doc_Image_URL = MyDoc.data().Image
+          firebase.storage().ref().child(Doc_Image_URL).delete(); // Delete Image of the document in FireStorage
+          MyDoc.ref.delete(); // Then Delete the document in FireStore
+
+          this.AllDocuments.splice(this.AllDocuments.findIndex(e => e.Image === Doc_Image_URL), 1);
+          this.emitAllDocument();
+          this.Route.navigate(['Affichage/All']);
+        },
+        (error) => { console.log("Erreur !", error) });
 
   }
 
-  AddImage(file: Upload, data) {
+  AddImage(file: Upload, DocumentInformation) {
 
-    var storageRef = firebase.storage().ref();
+    this.storageRef
+      .child(`${this.PATH_NAME}/WEB${file.name}`)
+      .put(file.file)
+      .on('state_changed',
+        (snapshot: any) => {
+          file.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          console.log('Progress = ' + file.progress + '%');
+        },
+        (error) => {
+          // Upload Failed !
+          console.log(error)
+        },
+        () => {
+          // Upload Complete !
+          this.AddNewDocument(DocumentInformation);
+          setTimeout(
+            () => { this.Route.navigate(['Affichage/All']); }, 2000
+          )
 
-    let uploadTask = storageRef.child(`${this.basePath}/WEB${file.name}`).put(file.file);
-    uploadTask.on('state_changed',
-      (snapshot: any) => {
-        file.progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log('Progress = ' + file.progress + '%');
-      },
-      (error) => {
-        // upload failed
-        console.log(error)
-      },
-      () => {
-        this.AddNewDocument(data);
-        setTimeout(
-          () => { this.Route.navigate(['Affichage/All']); }, 2000
-        )
-
-      }
-    );
+        }
+      );
   }
 
-  GetDocumentsPaginator(limit: number, start) {
-    this.Doc = [];
-    var first = this.firestore.collection("affichages")
-      .orderBy("Date", "desc")
+  GetDocumentsPaginator(limit: number, start: number) {
+    this.AllDocuments = [];
+    var first = this.FireStore.collection(this.COLLECTION_NAME)
+      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
       .limit(limit)
       .endAt(start)
 
-
     first.get().then(
-      (SnapDoc) => {
-        SnapDoc.forEach(element => {
-          var final = element.data() as Documents
-          final.id = element.id;
-          this.Doc.push(final)
-          this.emitAllDocument();
+      (Documents) => {
+        Documents.forEach(Doc => {
+          var OneDocument = Doc.data() as Documents;
+          OneDocument.id = Doc.id;
+          this.AllDocuments.push(OneDocument)
 
+          this.emitAllDocument();
         });
       }
     )
 
   }
 
-
   // Partie Observable
 
   emitDocumentID() {
-    this.OneDocumentObservable.next(this.OneDocuments);
+    this.OneDocument$.next(this.OneDocument);
   }
 
   emitAllDocument() {
-    this.AllDocumentObservable.next(this.Doc.slice())
+    this.AllDocuments$.next(this.AllDocuments.slice())
   }
-
-
-
 
 }
 

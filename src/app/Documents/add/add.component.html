@@ -112,7 +112,7 @@
               </div>
             </div>
             <div class="text-center">
-              <button [disabled]="!FormulaireAdd.valid" type="submit" class="btn btn-primary btn-lg">Next</button>
+              <button [disabled]="!FormulaireAdd.valid" type="submit" class="btn btn-primary btn-lg">Next <i class="fas fa-caret-right"></i></button>
 
 
             </div>
@@ -126,7 +126,7 @@
             <input #imageKH (change)="onChange($event)" type="file" accept="image/*" class="shadow-sm border border-primary px-3 pt-2 pb-2 alert alert-primary  font-weight-bold rounded-pill"><br><br>
               
             <button id="btnPublier" (click)="onSubmitGloabal()" [disabled]="disableButton" class="btn btn-primary btn-lg" style="display:none;">
-                Publier
+                Publier <i class="fas fa-file-export"></i> 
                 <div  *ngIf="disableButton" class="LoadING" >
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   <span class="sr-only">Loading...</span>

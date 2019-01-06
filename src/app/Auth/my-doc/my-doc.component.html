@@ -25,7 +25,7 @@
               </p>
               <a [routerLink]="[ '/Affichage', Doc.id ]" class="btn btn-primary mr-2 float-right">Visualiser</a>
               
-              <a *ngIf="Doc?.UserID == UserID" (click)="DocumentID = Doc.id" class="btn btn-danger text-white"  data-toggle="modal" data-target="#DeleteNow">Delete</a>
+              <a *ngIf="Doc?.UserID == UserID" (click)="DocumentID = Doc.id" class="btn btn-danger text-white"  data-toggle="modal" data-target="#DeleteNow"><i class="far fa-trash-alt"></i></a>
             </div>
               
               <!-- Modal -->

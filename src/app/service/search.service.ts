@@ -2,35 +2,42 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase'
 import { Documents } from '../documents';
 import { ReplaySubject } from 'rxjs';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  firestore = firebase.firestore();
-  
 
-  constructor() {
-       var settings = { timestampsInSnapshots: true};
-      this.firestore.settings(settings);
-   }
+  COLLECTION_NAME: string;
+  ORDERED_BY: firebase.firestore.OrderByDirection;
+  ORDERED_NAME: string;
+  FireStore: firebase.firestore.Firestore;
+
 
   ListOfDocuments: Documents[] = [];
-  ListeOfDocumentsRxJS = new ReplaySubject<Documents[]>();
+  ListOfDocuments$ = new ReplaySubject<Documents[]>();
 
-  SearchDoc(path: string) {
+  constructor(private Config: ConfigService) {
+    this.ORDERED_NAME = this.Config.ORDERED_NAME;
+    this.ORDERED_BY = this.Config.ORDERED_BY;
+    this.FireStore = this.Config.firestore
+    this.COLLECTION_NAME = this.Config.COLLECTION_NAME;
+  }
+
+  SearchDoc(option: string) {
 
     this.ListOfDocuments = [];
-    this.firestore.collection('affichages')
-      .orderBy("Date","desc")
-      .where('Year', '==', path)
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
+      .where('Year', '==', option)
       .get()
       .then(
-        (Doc) => {
-          Doc.forEach(element => {
-            let OneDocument = element.data() as Documents;
-            OneDocument.id =  element.id
+        (Documents) => {
+          Documents.forEach(Doc => {
+            let OneDocument = Doc.data() as Documents;
+            OneDocument.id = Doc.id
             this.ListOfDocuments.push(OneDocument);
           });
         }
@@ -40,18 +47,18 @@ export class SearchService {
 
   }
 
-  SearchByRef(choix:string,text,year:string){
+  SearchByRef(choix: string, text, year: string) {
     this.ListOfDocuments = [];
-    this.firestore.collection('affichages')
-      .orderBy("Date","desc")
+    this.FireStore.collection(this.COLLECTION_NAME)
+      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
       .where(choix, '==', text)
       .where("Year", '==', year)
       .get()
       .then(
-        (Doc) => {
-          Doc.forEach(element => {
-            let OneDocument = element.data() as Documents;
-            OneDocument.id =  element.id
+        (Documents) => {
+          Documents.forEach(Doc => {
+            let OneDocument = Doc.data() as Documents;
+            OneDocument.id = Doc.id
             this.ListOfDocuments.push(OneDocument);
           });
         }
@@ -61,9 +68,8 @@ export class SearchService {
 
   }
 
-
   emitSearchDoc() {
-    this.ListeOfDocumentsRxJS.next(this.ListOfDocuments);
+    this.ListOfDocuments$.next(this.ListOfDocuments);
   }
 
 }

@@ -29,7 +29,7 @@ export class MyDocComponent implements OnInit {
     
  
     
-    this.DocumentService.AllDocumentObservable.subscribe(
+    this.DocumentService.AllDocuments$.subscribe(
       (value) => {
         this.Documents = value;
 

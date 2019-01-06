@@ -30,7 +30,7 @@
           alt="">
       </div>
 
-      <button (click)="RetourList();" class="btn bounceIn animated btn-warning px-4 mt-4"> &#60; Retour</button>
+      <button (click)="RetourList();" class="btn bounceIn animated btn-warning px-4 mt-4"> <i class="fas fa-caret-left"></i></button>
 
     </div>
 
@@ -45,14 +45,14 @@
       </div>
       <div class="w-100"></div>
 
-      <button (click)="RetourList();" class="btn btn-danger px-4 mt-4">Retour</button>
+      <button (click)="RetourList();" class="btn btn-danger px-4 mt-4"><i class="fas fa-caret-left"></i></button>
 
     </div>
 
   </div>
 
 
-  <div id="PanelSearch" class="jumbotron DesignedJumbo shadow-lg animated fadeIn slow" style="display: none" >
+  <div id="PanelSearch" class="jumbotron DesignedJumbo shadow-lg animated fadeIn slow" style="display: none">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous">
     <div class="container">
@@ -66,17 +66,18 @@
               </div>
               <!--end of col-->
               <div class="col">
-                <input #TextChoix class="form-control form-control-lg form-control-borderless" type="search" placeholder="{{getExample()}}">
+                <input #TextChoix class="form-control form-control-lg form-control-borderless" type="search"
+                  placeholder="{{getExample()}}">
               </div>
               <!--end of col-->
               <div class="col-auto">
                 <select #Choix class="form-select pt-2 pl-2 rounded pb-2 mr-2" name="" id="">
-                  <option selected >Titre</option>
+                  <option selected>Titre</option>
                   <option>Module</option>
                   <option>Groupe</option>
                   <option>Section</option>
                 </select>
-                <button (click)="DataChanged(Choix.value,TextChoix.value)"class="btn btn-lg btn-success" type="submit">Search</button>
+                <button (click)="DataChanged(Choix.value,TextChoix.value)" class="btn btn-lg btn-success" type="submit">Search</button>
               </div>
               <!--end of col-->
             </div>
@@ -91,37 +92,38 @@
 
 
       <img id="ImageLoading" src="/assets/images/load.gif" class="mx-auto d-block" style="width:50%" alt="">
-      
+
       <div class="table-responsive ">
-      <table id="tableauR" class="table table-hover shadow-sm table-dark" style="display: none">
-        <thead>
-          <tr>
-            <th  scope="col">#</th>
-            <th  scope="col">Titre</th>
-            <th  scope="col">Module</th>
-            <th  scope="col">Year</th>
-            <th  scope="col">Semestre</th>
-            <th  scope="col">Section</th>
-            <th  scope="col">Groupe</th>
-            <th  scope="col">Date</th>
-            <th  scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let Doc of ListOfDocuments;let i=index">
-            <th>{{i+1}}</th>
-            <td>{{Doc?.Titre}}</td>
-            <td>{{Doc?.Module}}</td>
-            <td>{{Doc?.Year}}</td>
-            <td>{{Doc?.Semestre}}</td>
-            <td>{{Doc?.Section}}</td>
-            <td>{{Doc?.Groupe}}</td>
-            <td>{{Doc?.Date.seconds*1000 | date :'dd/MM/yyyy - HH:mm'}}</td>
-            <td><Button [routerLink]="[ '/Affichage', Doc.id ]" class="btn btn-primary mb-2">Show</Button></td>
-          </tr>
-        </tbody>
-      </table>
+        <table id="tableauR" class="table table-hover shadow-sm table-dark" style="display: none">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titre</th>
+              <th scope="col">Module</th>
+              <th scope="col">Year</th>
+              <th scope="col">Semestre</th>
+              <th scope="col">Section</th>
+              <th scope="col">Groupe</th>
+              <th scope="col">Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let Doc of ListOfDocuments;let i=index">
+              <th>{{i+1}}</th>
+              <td>{{Doc?.Titre}}</td>
+              <td>{{Doc?.Module}}</td>
+              <td>{{Doc?.Year}}</td>
+              <td>{{Doc?.Semestre}}</td>
+              <td>{{Doc?.Section}}</td>
+              <td>{{Doc?.Groupe}}</td>
+              <td>{{Doc?.Date.seconds*1000 | date :'dd/MM/yyyy - HH:mm'}}</td>
+              <td><Button [routerLink]="[ '/Affichage', Doc.id ]" class="btn btn-primary mb-2"><i class="far fa-arrow-alt-circle-right"></i></Button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+
 </div>

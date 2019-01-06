@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule} from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { DocumentsService } from './service/documents.service';
 import { EditComponent } from './Documents/edit/edit.component';
 import { ResearchComponent } from './research/research.component';
 import { MyDocComponent } from './Auth/my-doc/my-doc.component';
+import { ConfigService } from './service/config.service';
 
 
 
@@ -39,7 +40,7 @@ import { MyDocComponent } from './Auth/my-doc/my-doc.component';
     EditComponent,
     ResearchComponent,
     MyDocComponent,
-    
+
   ],
   imports: [
     ReactiveFormsModule,
@@ -48,7 +49,8 @@ import { MyDocComponent } from './Auth/my-doc/my-doc.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [AuthService,CanAuthService,DocumentsService],
+  providers: [ConfigService, AuthService, CanAuthService, DocumentsService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

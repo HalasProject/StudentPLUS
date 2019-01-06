@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark" data-toggle="affix">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4" data-toggle="affix">
     <div class="container flex-sm-nowrap justify-content-center">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars4" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -9,51 +9,48 @@
                 <li class="nav-item dropdown" routerLinkActive="active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        Affichage
+                        <i class="fas fa-grip-horizontal"></i> Affichage
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" routerLink="Affichage/All">All</a>
-                        <a class="dropdown-item" routerLink="Affichage/Add">Ajouter</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" routerLink="Affichage/All"><i class="fas fa-globe-africa"></i> All</a>
+                        <a class="dropdown-item" routerLink="Affichage/Add"><i class="fas fa-plus"></i> Ajouter</a>
                     </div>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Search">Rechercher</a>
+                    <a class="nav-link" routerLink="Search"><i class="fas fa-search"></i> Rechercher</a>
                 </li>
-                <li>
+                <li class="d-none d-sm-block">
                     <a class="navbar-brand" routerLink="home"><img src="/assets/images/HalasLOGO.png" width="35" height="35"
                             class="d-inline-block align-top" alt=""></a>
                 </li>
                 <li *ngIf="!isAuth" class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Connexion">Connexion</a>
+                    <a class="nav-link" routerLink="Connexion"><i class="fas fa-user-lock"></i> Connexion</a>
                 </li>
                 <li *ngIf="!isAuth" class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Inscription">Inscription</a>
+                    <a class="nav-link" routerLink="Inscription"><i class="fas fa-user-plus"></i> Inscription</a>
                 </li>
 
-            
+
                 <li *ngIf="isAuth" class="nav-item dropdown" routerLinkActive="active">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            {{UserName}}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" routerLink="Me/Profile">Profile</a>
-                            <a class="dropdown-item" routerLink="Me/MyAffichage">Mes Publication</a>
-                        </div>
-                    </li>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-graduate"></i> {{UserName}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" routerLink="Me/Profile"><i class="fas fa-user-alt"></i> Profile</a>
+                        <a class="dropdown-item" routerLink="Me/MyAffichage"><i class="fas fa-box-open"></i> Mes Publications</a>
+                    </div>
+                </li>
 
                 <li *ngIf="isAuth" class="nav-item">
-                    <a style="cursor:pointer" class="nav-link" data-toggle="modal" data-target="#DeconnexionModel">Deconnexion</a>
+                    <a style="cursor:pointer" class="nav-link" data-toggle="modal" data-target="#DeconnexionModel"><i class="fas fa-sign-out-alt"></i> Deconnexion</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<br>
 
 <div class="modal fade" id="DeconnexionModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">

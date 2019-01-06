@@ -7,7 +7,7 @@ import { validateConfig } from '@angular/router/src/config';
 @Component({
   selector: 'app-inscription',
   templateUrl: './inscription.component.html',
-  styleUrls: ['./inscription.component.css']
+  styleUrls: ['../ExtendsCSS.component.css']
 })
 export class InscriptionComponent implements OnInit {
 

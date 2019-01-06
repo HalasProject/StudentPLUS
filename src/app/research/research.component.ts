@@ -31,7 +31,7 @@ export class ResearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     Math.random()
 
-    this.RxJSDocSecurity = this.DocSearch.ListeOfDocumentsRxJS.subscribe(
+    this.RxJSDocSecurity = this.DocSearch.ListOfDocuments$.subscribe(
       (DocList: Documents[]) => {
 
         this.ListOfDocuments = DocList;
