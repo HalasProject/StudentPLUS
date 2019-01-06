@@ -13,22 +13,22 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" routerLink="Affichage/All"><i class="fas fa-globe-africa"></i> All</a>
-                        <a class="dropdown-item" routerLink="Affichage/Add"><i class="fas fa-plus"></i> Ajouter</a>
+                        <a class="dropdown-item" routerLink="Affichage/Add"><i class="fas fa-plus"></i> Add</a>
                     </div>
                 </li>
 
                 <li class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Search"><i class="fas fa-search"></i> Rechercher</a>
+                    <a class="nav-link" routerLink="Search"><i class="fas fa-search"></i> Search</a>
                 </li>
                 <li class="d-none d-sm-block">
                     <a class="navbar-brand" routerLink="home"><img src="/assets/images/HalasLOGO.png" width="35" height="35"
                             class="d-inline-block align-top" alt=""></a>
                 </li>
                 <li *ngIf="!isAuth" class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Connexion"><i class="fas fa-user-lock"></i> Connexion</a>
+                    <a class="nav-link" routerLink="Connexion"><i class="fas fa-user-lock"></i> Log in</a>
                 </li>
                 <li *ngIf="!isAuth" class="nav-item" routerLinkActive="active">
-                    <a class="nav-link" routerLink="Inscription"><i class="fas fa-user-plus"></i> Inscription</a>
+                    <a class="nav-link" routerLink="Inscription"><i class="fas fa-user-plus"></i> Registration</a>
                 </li>
 
 
@@ -39,12 +39,12 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" routerLink="Me/Profile"><i class="fas fa-user-alt"></i> Profile</a>
-                        <a class="dropdown-item" routerLink="Me/MyAffichage"><i class="fas fa-box-open"></i> Mes Publications</a>
+                        <a class="dropdown-item" routerLink="Me/MyAffichage"><i class="fas fa-box-open"></i> My Publications</a>
                     </div>
                 </li>
 
                 <li *ngIf="isAuth" class="nav-item">
-                    <a style="cursor:pointer" class="nav-link" data-toggle="modal" data-target="#DeconnexionModel"><i class="fas fa-sign-out-alt"></i> Deconnexion</a>
+                    <a style="cursor:pointer" class="nav-link" data-toggle="modal" data-target="#DeconnexionModel"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
                 </li>
             </ul>
         </div>

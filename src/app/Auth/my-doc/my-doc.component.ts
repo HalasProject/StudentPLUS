@@ -13,27 +13,22 @@ export class MyDocComponent implements OnInit {
   Documents: Documents[] = [];
   UserID: string = "NULL";
   DocumentID: string
-  StartNumber: number = 1;
 
   constructor(private DocumentService: DocumentsService,
     private AuthService: AuthService) {
-
     this.UserID = this.AuthService.getUserId()
-    console.log(this.UserID);
-    this.DocumentService.GetDocumentOfOneUser(this.UserID);
-
+   
   }
 
 
   ngOnInit() {
     
- 
-    
-    this.DocumentService.AllDocuments$.subscribe(
-      (value) => {
-        this.Documents = value;
-
-      })
+    this.DocumentService.GetDocumentOfOneUser(this.UserID).then(
+      ()=>{ this.DocumentService.AllDocumentsOfUser$.subscribe(
+        (value) => {
+          this.Documents = value;
+        })}
+    )
 
       if (this.Documents = []){
         $("#errornothing").show();

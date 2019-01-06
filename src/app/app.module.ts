@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ConnexionComponent } from './Auth/connexion/connexion.component';
 import { InscriptionComponent } from './Auth/inscription/inscription.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AllComponent } from './Documents/all/all.component';
 import { OneComponent } from './Documents/one/one.component';
@@ -30,7 +29,6 @@ import { ConfigService } from './service/config.service';
     ConnexionComponent,
     InscriptionComponent,
     NavbarComponent,
-    FooterComponent,
     HomeComponent,
     AllComponent,
     OneComponent,

@@ -7,6 +7,7 @@ import { ReplaySubject } from 'rxjs';
 import { ConfigService } from './config.service';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,6 +31,9 @@ export class DocumentsService {
   AllDocuments: Documents[] = [];
   AllDocuments$ = new ReplaySubject<Documents[]>();
 
+  AllDocumentsOfUser:Documents[] = [];
+  AllDocumentsOfUser$ = new ReplaySubject<Documents[]>();
+
   constructor(private Route: Router,
     private Config: ConfigService) {
 
@@ -42,54 +46,69 @@ export class DocumentsService {
 
 
   GetDocumentOfOneUser(userID: string) {
-    this.AllDocuments = []
-    this.FireStore.collection(this.COLLECTION_NAME)
-      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
-      .where("UserID", "==", userID)
-      .get()
-      .then(
-        (value) => {
-          value.forEach(
-            (result) => {
-
-              var Final = result.data() as Documents;
-              Final.id = result.id;
-
-              this.AllDocuments.push(Final)
+    
+    return new Promise(
+      (resolve,reject)=>{
+        this.AllDocumentsOfUser = []
+        this.FireStore.collection(this.COLLECTION_NAME)
+          .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
+          .where("UserID", "==", userID)
+          .get()
+          .then(
+            (value) => {
+              value.forEach(
+                (result) => {
+    
+                  var Final = result.data() as Documents;
+                  Final.id = result.id;
+    
+                  this.AllDocumentsOfUser.push(Final)
+                }
+              );
+              this.emitAllDocumentsOfUser();
+              resolve();
             }
           );
-          this.emitAllDocument();
-        }
-      );
+      }
+    )
+    
+   
 
   }
 
-  GetDocuments(): Documents[] {
-
-    this.AllDocuments = [];
-    this.FireStore.collection(this.COLLECTION_NAME)
-      .get()
-      .then(
+  GetDocuments(){
+  return new Promise(
+    (resolve,reject)=>{
+      this.AllDocuments = [];
+      var first = this.FireStore.collection(this.COLLECTION_NAME)
+        .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
+        
+      first.get().then(
         (Documents) => {
-          Documents.forEach(
-            (Doc) => {
-
-              let OneDoc = Doc.data() as Documents;
-              OneDoc.id = Doc.id;
-
-              this.AllDocuments.push(OneDoc)
-            }
-          );
+          Documents.forEach(Doc => {
+            var OneDocument = Doc.data() as Documents;
+            OneDocument.id = Doc.id;
+            this.AllDocuments.push(OneDocument)
+            
+          });
+          this.emitAllDocument();
+          resolve();
         }
-      );
+      ).catch(
+        (error)=> { reject(error) });
+    }
+  );
 
-    return this.AllDocuments;
+
+    
+    
 
   }
 
-  getDocumentById(DocID: string): Documents {
-
-    this.FireStore.collection(this.COLLECTION_NAME)
+  getDocumentById(DocID: string) {
+   return new Promise(
+     (resolve,reject)=>{
+      this.FireStore.collection(this.COLLECTION_NAME)
       .doc(DocID)
       .get()
       .then(
@@ -98,16 +117,17 @@ export class DocumentsService {
             let OneDoc = Doc.data() as Documents;
             this.OneDocument = OneDoc;
             this.emitDocumentID();
+           
           }
           else {
-            console.log("Document N'existe pas !")
             this.Route.navigate(['error'])
           }
         }
-
-      );
-
-    return this.OneDocument;
+       
+      )
+      resolve()
+     }
+   )
   }
 
   AddNewDocument(DocumentInformation) {
@@ -167,27 +187,6 @@ export class DocumentsService {
       );
   }
 
-  GetDocumentsPaginator(limit: number, start: number) {
-    this.AllDocuments = [];
-    var first = this.FireStore.collection(this.COLLECTION_NAME)
-      .orderBy(this.ORDERED_NAME, this.ORDERED_BY)
-      .limit(limit)
-      .endAt(start)
-
-    first.get().then(
-      (Documents) => {
-        Documents.forEach(Doc => {
-          var OneDocument = Doc.data() as Documents;
-          OneDocument.id = Doc.id;
-          this.AllDocuments.push(OneDocument)
-
-          this.emitAllDocument();
-        });
-      }
-    )
-
-  }
-
   // Partie Observable
 
   emitDocumentID() {
@@ -196,6 +195,10 @@ export class DocumentsService {
 
   emitAllDocument() {
     this.AllDocuments$.next(this.AllDocuments.slice())
+  }
+
+  emitAllDocumentsOfUser() {
+    this.AllDocumentsOfUser$.next(this.AllDocumentsOfUser.slice())
   }
 
 }

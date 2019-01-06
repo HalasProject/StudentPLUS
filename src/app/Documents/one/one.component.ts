@@ -42,26 +42,30 @@ export class OneComponent implements OnInit, OnDestroy {
         }
       )
 
-    this.DocumentService.getDocumentById(this.DocumentID);
-
-    this.CurrentDoc$ = this.DocumentService.OneDocument$.subscribe(
-      (Doc) => {
-
-        this.CurrentDoc = Doc;
-        var ImageURL = `${this.CurrentDoc.Image}`;
-
-        firebase.storage().ref().child(ImageURL)
-          .getDownloadURL()
-          .then(
-            (url) => {
-              var image = document.getElementById('myimg') as HTMLImageElement
-              this.IMAGE_URL = url
-              image.src = url;
-            },
-            (error) => {
-              console.log('Problem with image !? :' + error)
-            });
-      }, (error) => { console.log('erreur !' + error) }
+    this.DocumentService.getDocumentById(this.DocumentID).then(
+      ()=>{this.CurrentDoc$ = this.DocumentService.OneDocument$.subscribe(
+        (Doc) => {
+  
+          this.CurrentDoc = Doc;
+          var ImageURL = `${this.CurrentDoc.Image}`;
+  
+          firebase.storage().ref().child(ImageURL)
+            .getDownloadURL()
+            .then(
+              (url) => {
+                var image = document.getElementById('myimg') as HTMLImageElement
+                this.IMAGE_URL = url
+                image.src = url;
+              },
+              (error) => {
+                console.log('Problem with image !? :' + error)
+              });
+        }, (error) => { console.log('erreur !' + error) }
+      )}
+    )
+    .catch(
+      
+     ()=> (console.log("erreur"))
     )
 
   }
@@ -76,6 +80,7 @@ export class OneComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.CurrentDoc$.unsubscribe();
+    
   }
 
 }

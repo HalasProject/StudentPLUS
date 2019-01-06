@@ -2,21 +2,13 @@
     box-sizing: border-box;
 }
 
-.lol{
-    position:relative;
-    
-    
-}
 
 .blockimage{
-     
     cursor: pointer;
 }
 
 .blockimage:hover{
     opacity: 0.8;
-   
-
 }
 
 

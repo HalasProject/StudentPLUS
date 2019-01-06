@@ -5,6 +5,7 @@ import { Documents } from 'src/app/documents'
 import { AuthService } from 'src/app/service/auth.service';
 import * as JQ from 'jquery'
 import { Timestamp, Subscription } from 'rxjs';
+import { promise } from 'protractor';
 
 
 
@@ -22,50 +23,31 @@ export class AllComponent implements OnInit, OnDestroy {
 
   UserID: string = "NULL";
   DocumentID: string;
-  
-  StartNumber: number = 1;
+
   
 
   constructor(private DocumentService: DocumentsService) {
-    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
+    
   }
 
 
   ngOnInit() {
-
-    this.Documents$ = this.DocumentService.AllDocuments$.subscribe(
-      (value) => {
-        this.Documents = value;
-      }
+   
+    console.log(this.Documents.length)
+    this.DocumentService.GetDocuments().then(
+      ()=>{
+      this.Documents$ = this.DocumentService.AllDocuments$.subscribe(
+        (value) => {
+          this.Documents = value;
+        }
+      )}
     )
-
-  $("cardeyes").mouseenter(
-    ()=>{ console.log("lol")}
-  )
     
 
   }
 
   onDelete(id: string) {
     this.DocumentService.onDeleteDocument(id);
-  }
-
-
-  onNext() {
-    //Manque le nombre maximum 
-    this.StartNumber += 4
-    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
-  }
-
-  onPrevious() {
-    this.StartNumber -= 4
-    this.DocumentService.GetDocumentsPaginator(8, this.StartNumber);
-
-  }
-
-  GetNumber(): boolean {
-    if (this.StartNumber <= 1)
-      return true;
   }
 
   GetLength(): boolean {
