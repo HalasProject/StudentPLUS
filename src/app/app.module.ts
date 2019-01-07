@@ -26,19 +26,18 @@ import { ConfigService } from './service/config.service';
 @NgModule({
   declarations: [
     AppComponent,
+    NotFoundComponent,
     ConnexionComponent,
     InscriptionComponent,
     NavbarComponent,
     HomeComponent,
     AllComponent,
     OneComponent,
-    NotFoundComponent,
     AddComponent,
     ProfileComponent,
     EditComponent,
     ResearchComponent,
     MyDocComponent,
-
   ],
   imports: [
     ReactiveFormsModule,
@@ -47,7 +46,12 @@ import { ConfigService } from './service/config.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ConfigService, AuthService, CanAuthService, DocumentsService],
+  providers: [
+    ConfigService,
+    AuthService,
+    CanAuthService,
+    DocumentsService
+  ],
   bootstrap: [AppComponent]
 })
 

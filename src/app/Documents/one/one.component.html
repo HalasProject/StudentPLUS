@@ -10,6 +10,7 @@
           <div class="media-body">
             <h5 class="display-4 mt-0">{{CurrentDoc?.Titre}}</h5>
             <span Class="badge mr-2 badge-success"><strong> Auteur:</strong> {{CurrentDoc?.CreatorName}}</span>
+            <span *ngIf="CurrentDoc.Module != 'None' && CurrentDoc.Module != '' " Class="badge badge-pill mr-2 badge-info">{{CurrentDoc?.Module}}</span>
             <span Class="badge badge-pill mr-2 badge-primary">{{CurrentDoc?.Type}}</span>
             <div class="alert alert-warning mt-2">
               <strong>Remarque: </strong>{{CurrentDoc?.Remarque}}

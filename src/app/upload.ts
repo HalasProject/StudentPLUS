@@ -5,8 +5,7 @@ export class Upload {
     name: string;
     url: string;
     progress: number;
-    createdAt: Date = new Date();
-
+   
     constructor(file: File, name: string) {
         this.name = name
         this.file = file;

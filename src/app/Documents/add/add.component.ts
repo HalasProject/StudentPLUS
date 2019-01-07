@@ -19,20 +19,20 @@ export class AddComponent implements OnInit {
   FormulaireAdd: FormGroup;
 
 
-  License1_1 = ["Analyse 1", "Algebre 1", "Initiation à l'algorithmique", "Terminologie Francais", "Bureautique", "Physique 1", "Codage", "Economie", "Electronique", "Langue étrangère 1"];
-  License1_2 = ["Analyse 2", "Algebre 2", "Probabillités & Statistique", "Structure Machine", "TIC", "Mathémathique Programation", "Orientée Objet", "Physique 2", "Histoire des sciences"];
+  License1_1 = ["","Analyse 1", "Algebre 1", "Initiation à l'algorithmique", "Terminologie Francais", "Bureautique", "Physique 1", "Codage", "Economie", "Electronique", "Langue étrangère 1"];
+  License1_2 = ["","Analyse 2", "Algebre 2", "Probabillités & Statistique", "Structure Machine", "TIC", "Mathémathique Programation", "Orientée Objet", "Physique 2", "Histoire des sciences"];
 
-  License2_1 = ["Archetecture des Ordinateurs", "Algorithme et structures de données", "Logique Mathématique", "Programation Orientée Objet", "System d'information", "Théorie des langages", "Méthodes numériques", "Langue étrangère 2"];
-  License2_2 = ["Base de Données", "Systèmes d'exploitation 1", "Génie Logiciel 1", "Théorie des graphs", "Réseaux de communication", "Dévloppement d'application Web", "Aspects Juridiques et Economiques des Logiciels", "Langue étrangère 3"];
+  License2_1 = ["","Archetecture des Ordinateurs", "Algorithme et structures de données", "Logique Mathématique", "Programation Orientée Objet", "System d'information", "Théorie des langages", "Méthodes numériques", "Langue étrangère 2"];
+  License2_2 = ["","Base de Données", "Systèmes d'exploitation 1", "Génie Logiciel 1", "Théorie des graphs", "Réseaux de communication", "Dévloppement d'application Web", "Aspects Juridiques et Economiques des Logiciels", "Langue étrangère 3"];
 
-  License3_1 = ["Interface Homme Machine", "Compilation", "System d'exploitation", "Prolog", "Genie Logiciel", "Réseaux de communication 2", "Nouvelles Technologies Dev Application"];
-  License3_2 = ['Android'];
+  License3_1 = ["","Interface Homme Machine", "Compilation", "System d'exploitation", "Prolog", "Genie Logiciel", "Réseaux de communication 2", "Nouvelles Technologies Dev Application"];
+  License3_2 = ["",'Android'];
 
-  Master1_1 = [''];
-  Master1_2 = [''];
+  Master1_1 = ["",''];
+  Master1_2 = ["",''];
 
-  Master2_1 = [''];
-  Master2_2 = [''];
+  Master2_1 = ["",''];
+  Master2_2 = ["",''];
 
   InformationText: string;
   MonAffichageImage: File = null;
@@ -70,7 +70,7 @@ export class AddComponent implements OnInit {
         Titre: ['', [Validators.required, Validators.maxLength(30)]],
         Year: ['', [Validators.required]],
         Semestre: ['', [Validators.required]],
-        Module: ['None', [Validators.required]],
+        Module: ['None'],
         Section: ['', [Validators.required, Validators.min(1),Validators.max(10)]],
         Groupe: ['', [Validators.required, Validators.min(1),Validators.max(10)]],
         Type: ['', [Validators.required]],
