@@ -16,12 +16,7 @@ export class AppComponent{
 
   constructor(){
     var config = {
-      apiKey: "AIzaSyA2_gEMFKrlYyn6xfo6mxNVutQDBx8rPIA",
-      authDomain: "affichage-note.firebaseapp.com",
-      databaseURL: "https://affichage-note.firebaseio.com",
-      projectId: "affichage-note",
-      storageBucket: "affichage-note.appspot.com",
-      messagingSenderId: "164890982427"
+      //Put here your firebase database config 
     };
     firebase.initializeApp(config);
    
