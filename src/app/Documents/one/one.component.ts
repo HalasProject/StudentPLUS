@@ -25,7 +25,7 @@ export class OneComponent implements OnInit, OnDestroy {
   constructor(public DocumentService: DocumentsService,
     private AuthService: AuthService,
     private Route: ActivatedRoute) {
-    this.DocumentID = this.Route.snapshot.params['id'];
+    this.DocumentID = this.Route.snapshot.params['id']; // Changing params to paramMap for mor security 
   }
 
   ngOnInit() {
